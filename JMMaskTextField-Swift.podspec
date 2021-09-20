@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
 s.name             = 'JMMaskTextField-Swift'
-s.version          = '0.1.3'
+s.version          = '0.1.4'
 s.summary          = 'JMMaskTextField - text field masking the easy way'
 
 s.description      = <<-DESC
@@ -14,7 +14,7 @@ s.author           = { 'Jota Melo' => 'jpmfagundes@gmail.com' }
 s.source           = { :git => 'https://github.com/JotaMelo/JMMaskTextField-Swift.git', :tag => s.version.to_s }
 s.social_media_url = 'https://twitter.com/Jota'
 
-s.ios.deployment_target = '8.0'
+s.ios.deployment_target = '13.2'
 
 s.source_files = 'JMMaskTextField/Classes/**/*'
 end
