@@ -14,6 +14,8 @@ open class JMMaskTextField: UITextField {
     public private(set) var stringMask: JMStringMask?
     fileprivate weak var realDelegate: UITextFieldDelegate?
     
+    public var onTextChanged: ((JMMaskTextField)->())? = nil
+    
     override weak open var delegate: UITextFieldDelegate? {
         get {
             return self.realDelegate
@@ -105,7 +107,10 @@ extension JMMaskTextField: UITextFieldDelegate {
             formattedString = mask.mask(string: unmaskedString)
         }
         
-        guard let finalText = formattedString as NSString? else { return false }
+        guard let finalText = formattedString as NSString? else {
+            return false
+            
+        }
         
         // if the cursor is not at the end and the string hasn't changed
         // it means the user tried to delete a mask character, so we'll
@@ -130,13 +135,26 @@ extension JMMaskTextField: UITextFieldDelegate {
                     cursorLocation = range.location + 1
                 }
                 
-                guard let startPosition = textField.position(from: textField.beginningOfDocument, offset: cursorLocation) else { return false }
-                guard let endPosition = textField.position(from: startPosition, offset: 0) else { return false }
+                guard let startPosition = textField.position(from: textField.beginningOfDocument, offset: cursorLocation) else {
+                    
+                    self.onTextChanged?(self)
+                    return false
+                    
+                }
+                guard let endPosition = textField.position(from: startPosition, offset: 0) else {
+                    
+                    self.onTextChanged?(self)
+                    return false
+                }
                 textField.selectedTextRange = textField.textRange(from: startPosition, to: endPosition)
             }
             
+            self.onTextChanged?(self)
+            
             return false
         }
+        
+        self.onTextChanged?(self)
         
         return true
     }

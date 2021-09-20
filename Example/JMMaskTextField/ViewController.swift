@@ -11,21 +11,23 @@ import JMMaskTextField
 
 class ViewController: UIViewController, UITextFieldDelegate {
     
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+    @IBOutlet var textField: JMMaskTextField!
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
-        guard let text = textField.text as NSString? else { return true }
-        let newText = text.replacingCharacters(in: range, with: string)
+        NotificationCenter.default.addObserver(self, selector: #selector(ViewController.textFieldDidChange(note:)), name: UITextField.textDidChangeNotification, object: nil)
         
-        let maskTextField = textField as! JMMaskTextField
-        guard let unmaskedText = maskTextField.stringMask?.unmask(string: newText) else { return true }
-        
-        if unmaskedText.count >= 11 {
-            maskTextField.maskString = "(00) 0 0000-0000"
-        } else {
-            maskTextField.maskString = "(00) 0000-0000"
+        textField.onTextChanged = { (textField) in
+            print("here \(textField.text)")
+            print("unmasked \(textField.unmaskedText)")
         }
-        
-        return true
+    }
+    
+    @objc func textFieldDidChange(note: Notification) {
+
+        print("here")
+    
     }
     
 }
