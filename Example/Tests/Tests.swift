@@ -14,10 +14,16 @@ class Tests: XCTestCase {
         XCTAssertEqual(mask.mask(string: "303103600"), nil)
         XCTAssertEqual(mask.mask(string: nil), nil)
         
-        mask = JMStringMask(mask: "AAA-0000")
+        mask = JMStringMask(mask: "SSS-0000")
         XCTAssertEqual(mask.mask(string: "123-EIEIEIEIE"), nil)
         XCTAssertEqual(mask.mask(string: "ETO1192"), "ETO-1192")
         XCTAssertEqual(mask.mask(string: "ETO-1192"), "ETO-1192")
+        XCTAssertEqual(mask.mask(string: "ETO11922"), nil)
+        
+        mask = JMStringMask(mask: "AAA-0000")
+        XCTAssertEqual(mask.mask(string: "123-EIEIEIEIE"), nil)
+        XCTAssertEqual(mask.mask(string: "E1T1192"), "E1T-1192")
+        XCTAssertEqual(mask.mask(string: "ET1-1192"), "ET1-1192")
         XCTAssertEqual(mask.mask(string: "ETO11922"), nil)
     }
     

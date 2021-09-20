@@ -9,9 +9,9 @@
 import Foundation
 
 fileprivate struct Constants {
-    static let letterMaskCharacter: Character = "A"
+    static let letterMaskCharacter: Character = "S"
     static let numberMaskCharacter: Character = "0"
-    static let alphanumericMaskCharacter: Character = "*"
+    static let alphanumericMaskCharacter: Character = "A"
 }
 
 public struct JMStringMask: Equatable {
