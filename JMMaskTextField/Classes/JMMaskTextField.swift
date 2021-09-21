@@ -15,6 +15,7 @@ open class JMMaskTextField: UITextField {
     fileprivate weak var realDelegate: UITextFieldDelegate?
     
     public var onTextChanged: ((JMMaskTextField)->())? = nil
+    public var shouldChangeCharactersInMaskTextField: ((JMMaskTextField, NSRange, String)->(Bool))? = nil
     
     override weak open var delegate: UITextFieldDelegate? {
         get {
@@ -87,10 +88,9 @@ extension JMMaskTextField: UITextFieldDelegate {
         let previousMask = self.stringMask
         let currentText: NSString = textField.text as NSString? ?? ""
         
-        if let realDelegate = self.realDelegate, realDelegate.responds(to: #selector(textField(_:shouldChangeCharactersIn:replacementString:))) {
-            let delegateResponse = realDelegate.textField!(textField, shouldChangeCharactersIn: range, replacementString: string)
-            
-            if !delegateResponse {
+        if self.shouldChangeCharactersInMaskTextField != nil {
+            let response = self.shouldChangeCharactersInMaskTextField?(self, range, string) ?? true
+            if !response {
                 return false
             }
         }
