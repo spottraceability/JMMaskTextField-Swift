@@ -5,7 +5,7 @@
 //  Created by Jota Melo on 02/01/17.
 //  Copyright © 2017 Jota. All rights reserved.
 //
-
+#if os(iOS)
 import UIKit
 
 open class JMMaskTextField: UITextField {
@@ -168,3 +168,4 @@ extension JMMaskTextField: UITextFieldDelegate {
     }
     
 }
+#endif

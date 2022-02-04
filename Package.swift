@@ -5,6 +5,7 @@ import PackageDescription
 
 let package = Package(
     name: "JMMaskTextField",
+    platforms: [.iOS(.v13), .macOS(.v10_15)],
     products: [
         .library(name: "JMMaskTextField", targets: ["JMMaskTextField"]),
     ],
