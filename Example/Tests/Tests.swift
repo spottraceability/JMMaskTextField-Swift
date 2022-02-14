@@ -25,6 +25,23 @@ class Tests: XCTestCase {
         XCTAssertEqual(mask.mask(string: "E1T1192"), "E1T-1192")
         XCTAssertEqual(mask.mask(string: "ET1-1192"), "ET1-1192")
         XCTAssertEqual(mask.mask(string: "ETO11922"), nil)
+        
+    }
+    
+    func testMoreStringMask() {
+        let mask2 = JMStringMask(mask: "##:##")
+        XCTAssertEqual(mask2.mask(string: "12"), "12")
+        XCTAssertEqual(mask2.mask(string: "1234"), "12:34")
+        
+        //string length > mask length so returned string will be nil
+        XCTAssertEqual(mask2.mask(string: "12344"), nil)
+        
+        let mask = JMStringMask(mask: "00:00")
+        XCTAssertEqual(mask.mask(string: "12"), "12")
+        XCTAssertEqual(mask.mask(string: "1234"), "12:34")
+        
+        //string length > mask length so returned string will be nil
+        XCTAssertEqual(mask.mask(string: "12345"), nil)
     }
     
     func testTextFieldMask() {

@@ -12,6 +12,7 @@ fileprivate struct Constants {
     static let letterMaskCharacter: Character = "S"
     static let numberMaskCharacter: Character = "0"
     static let alphanumericMaskCharacter: Character = "A"
+    static let numberMaskCharacterPoundSign: Character = "#"
 }
 
 public struct JMStringMask: Equatable {
@@ -54,18 +55,27 @@ public struct JMStringMask: Equatable {
             } else {
                 while (maskCharacter != Constants.letterMaskCharacter
                     && maskCharacter != Constants.numberMaskCharacter
-                    && maskCharacter != Constants.alphanumericMaskCharacter) {
+                    && maskCharacter != Constants.alphanumericMaskCharacter)
+                    && maskCharacter != Constants.numberMaskCharacterPoundSign
+                    && currentMaskIndex < self.mask.count {
+                    
                     formattedString.append(maskCharacter)
                     
                     currentMaskIndex += 1
-                    maskCharacter = self.mask[self.mask.index(string.startIndex, offsetBy: currentMaskIndex)]
+                    if currentMaskIndex < self.mask.count {
+                        maskCharacter = self.mask[self.mask.index(string.startIndex, offsetBy: currentMaskIndex)]
+                    }
+                    else {
+                        break
+                    }
                 }
                 
                 if maskCharacter != Constants.alphanumericMaskCharacter {
                     let isValidLetter = maskCharacter == Constants.letterMaskCharacter && self.isValidLetterCharacter(currentCharacter)
                     let isValidNumber = maskCharacter == Constants.numberMaskCharacter && self.isValidNumberCharacter(currentCharacter)
+                    let isValidNumberWithPoundSign = maskCharacter == Constants.numberMaskCharacterPoundSign && self.isValidNumberCharacter(currentCharacter)
                     
-                    if !isValidLetter && !isValidNumber {
+                    if !isValidLetter && !isValidNumber && !isValidNumberWithPoundSign {
                         return nil
                     }
                 }
